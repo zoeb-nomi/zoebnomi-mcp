@@ -1,0 +1,8 @@
+{
+  "answer": "The warrantless search of the car violated the Fourth Amendment [smith:0]. A contract signed under duress can be voided by the party who was coerced [smith:1]. The defendant was sentenced to ten years [smith:9].",
+  "sources": [
+    { "id": "smith:0", "text": "The court held that the search of the car, made without a warrant, violated the Fourth Amendment." },
+    { "id": "smith:1", "text": "The defendant was sentenced to five years in prison on the fraud counts." },
+    { "id": "jones:0", "text": "Contracts signed under duress are voidable at the option of the party who was coerced." }
+  ]
+}
