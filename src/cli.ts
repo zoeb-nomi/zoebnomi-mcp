@@ -58,6 +58,8 @@ export async function main(argv: string[]): Promise<number> {
   const flags = new Set(rest.filter((a) => a.startsWith('--')));
   const args = rest.filter((a) => !a.startsWith('--'));
   const asJson = flags.has('--json');
+  // The server's structured logs (site fallback, ledger) are for Workers Logs, not a person at a terminal.
+  if (cmd !== 'mcp' && !flags.has('--verbose')) console.warn = () => {};
 
   switch (cmd) {
     case undefined:
@@ -112,7 +114,7 @@ export async function main(argv: string[]): Promise<number> {
       if (asJson) console.log(JSON.stringify(r, null, 2));
       else {
         const s = r.summary;
-        console.log(bold(`${s.with_evidence} of ${s.requirements} requirement lines have public evidence (${Math.round(s.coverage * 100)}%).\n`));
+        console.log(bold(`${s.headline}\n`));
         for (const m of r.matches) console.log(`✓ ${m.capability}\n    ${m.evidence.map((e) => e.evidence).filter((v, i, a) => a.indexOf(v) === i).join('\n    ')}`);
         if (r.gaps.length) console.log(red(`\nGaps (no public evidence):`));
         for (const g of r.gaps) console.log(`  - ${g.jd_line}`);

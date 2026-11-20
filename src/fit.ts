@@ -102,7 +102,7 @@ const REQ_HINT =
   /\b(experience|years|proficien|familiar|knowledge of|ability to|track record|expertise|background in|understanding of|you have|you've|you will|you'll|must|required|requirement|preferred|bonus points|nice to have|degree|bachelor|master|strong|deep|hands-on)\b/i;
 
 export interface FitResult {
-  summary: { requirements: number; with_evidence: number; gaps: number; out_of_scope: number; coverage: number };
+  summary: { requirements: number; with_evidence: number; gaps: number; out_of_scope: number; headline: string };
   matches: Array<{
     capability: string;
     jd_lines: string[];
@@ -205,7 +205,8 @@ export function fitToRole(jobDescription: string, index: Index): FitResult {
       with_evidence: withEvidence,
       gaps: gaps.length,
       out_of_scope: outOfScope.length,
-      coverage: requirements ? Math.round((withEvidence / requirements) * 100) / 100 : 0,
+      // Counts, not a percentage: a requirement line either has public evidence or it does not.
+      headline: `${withEvidence} of ${requirements} requirement lines have public evidence on zoebnomi.com; ${gaps.length} ${gaps.length === 1 ? 'has' : 'have'} none.`,
     },
     matches,
     gaps,
