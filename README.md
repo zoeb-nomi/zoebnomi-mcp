@@ -35,7 +35,7 @@ Word overlap reliably catches a citation that points at the wrong place. It can'
 
 ## Install
 
-The remote endpoint will be `https://mcp.zoebnomi.com/mcp`. It and the npm package are **not published yet**; each line below works once they are. Until then, use the local build (see Develop).
+The remote endpoint is live at `https://mcp.zoebnomi.com/mcp` (health: https://mcp.zoebnomi.com/health). The npm package is **not published yet**, so the `npx zoebnomi` lines work once it is; until then use the remote endpoint or the local build (see Develop).
 
 **Claude Code**
 

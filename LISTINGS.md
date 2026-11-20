@@ -4,8 +4,8 @@ Requirements checked on the web on 2026-11-20 against each directory's own docs 
 
 ## Decisions needed first (Zoeb)
 
-- [x] **Custom domain: `mcp.zoebnomi.com`** (decided 2026-11-20). zoebnomi.com is already on Cloudflare DNS and `mcp.zoebnomi.com` does not exist yet. `wrangler.toml` declares it as a Worker custom domain, so the first deploy creates the DNS record and certificate. Before deploying, confirm the zoebnomi.com zone is in the same Cloudflare account as the Worker. `workers_dev` is off, so the custom domain is the only public URL.
-- [ ] **Public GitHub repo** `zoeb-nomi/zoebnomi-mcp` (Registry `repository`, Cursor and Claude plugin bundles must be public).
+- [x] **Custom domain: `mcp.zoebnomi.com`**, live since 2026-11-20 (Worker `zoebnomi-mcp`, deployed by Workers Builds from GitHub `main`; same Cloudflare account as zoebnomi.com). `workers_dev` is off, so the custom domain is the only public URL. A rate-limit rule (30 requests per 10 s per IP, block 10 s) protects it.
+- [x] **Public GitHub repo** https://github.com/zoeb-nomi/zoebnomi-mcp (2026-11-20).
 - [ ] **Privacy policy page** at a public HTTPS URL (Anthropic and OpenAI both ask). Draft in [PRIVACY.md](PRIVACY.md).
 - [ ] **Support, terms and website URLs** (OpenAI requires all four, same publisher) and a square **icon**.
 - [ ] **npm**: flip `"private": true` off in package.json, then `npm publish --access public`. The name `zoebnomi` was unclaimed on 2026-11-20.
@@ -79,7 +79,7 @@ Source: https://cursor.com/docs/context/mcp , https://cursor.com/docs/context/mc
 ## Order
 
 1. Public repo, privacy/support/terms pages, icon (domain decided: mcp.zoebnomi.com).
-2. Deploy the Worker to `mcp.zoebnomi.com` (pre-upgrade-review first), then `node scripts/smoke.ts https://mcp.zoebnomi.com`.
+2. ~~Deploy the Worker to `mcp.zoebnomi.com`~~ Done 2026-11-20: pre-upgrade-review passed, smoke test and MCP Inspector pass against the live URL.
 3. npm publish, then the Registry (feeds Glama and later PulseMCP).
 4. Anthropic connector, then the plugin bundle with the Skill.
 5. OpenAI, Cursor marketplace, mcp.so, Smithery.
