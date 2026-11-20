@@ -1,5 +1,5 @@
 # Cloudflare Worker for the remote MCP endpoint, https://mcp.zoebnomi.com/mcp.
-# Deployed by Cloudflare Workers Builds from GitHub main (see PUBLISH.md); never from a terminal.
+# Deployed by Cloudflare Workers Builds from GitHub main after `npm ci && npm test`.
 # The zoebnomi.com zone must be in the same Cloudflare account; the custom
 # domain creates the mcp.zoebnomi.com DNS record and certificate on deploy.
 # No secrets needed.

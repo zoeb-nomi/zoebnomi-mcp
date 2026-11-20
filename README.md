@@ -1,16 +1,29 @@
 # zoebnomi
 
-Tools, not an "about me" bot. An MCP server, a CLI and a Claude Skill from [Zoeb Nomi](https://www.zoebnomi.com). The lead tool is the citation check from [CrossSource](https://github.com/zoeb-nomi/crosssource), his open eval harness for citation accuracy in legal RAG, packaged so any agent can call it.
+**A free check catches every citation that points at the wrong document. It cannot catch one that misstates the right one.** On the held-out half of [CrossSource](https://github.com/zoeb-nomi/crosssource)'s labelled legal citations, word overlap caught 10 of 10 wrong-document citations and was right on all 16 calls it made, with no bad citation ever passed as supported. The 30 citations that were faithful or quietly misstated (a reversed holding, a swapped standard) looked identical to it. So `check_citations` decides the first kind for free and hands the second kind to a judge, with CrossSource's own judge prompt.
 
-Every tool is read-only and deterministic, and costs nothing to call. No API keys and no model calls on the server.
+An MCP server, a CLI and a Claude Skill from [Zoeb Nomi](https://www.zoebnomi.com). Every tool is read-only and deterministic, and costs nothing to call. No API keys and no model calls on the server.
 
-**The portfolio is the source.** Like the résumé flow, the tools read zoebnomi.com live (llms.txt and the case-study pages), cached for 15 minutes. A new build, essay or note on the site shows up in `verify_claim`, `fit_to_role` and the resources with no release. If the site doesn't answer, each page falls back to a snapshot bundled at build time. On top of the live text sits a small set of curated claims with n and date. Each one is kept only while its exact quote is still on the site, and `/health` lists any that have dropped out.
+## Try it in 60 seconds
+
+Add `https://mcp.zoebnomi.com/mcp` as a connector (Claude: Customize > Connectors > Add custom connector, "No sign in"; Claude Code: `claude mcp add --transport http zoebnomi https://mcp.zoebnomi.com/mcp`), then ask:
+
+1. *"Use check_citations on the answer and sources in https://github.com/zoeb-nomi/zoebnomi-mcp/blob/main/examples/answer.json"* (or paste your own answer with `[id]` citations and its sources). On the example:
+   - `[smith:1]` is a **wrong_document**: the cited passage shares 0% of the claim's words; `[jones:0]`, a different case, shares 83%.
+   - `[smith:9]` is an **unsupported_claim**: that id is not among the sources (fabricated or mis-copied).
+   - `[smith:0]` **needs_judgment**, with the judge prompt attached: overlap alone cannot tell support from a misstatement.
+2. *"verify_claim: CrossSource strict prompting lifted citation precision to 0.999"* returns **number_mismatch**: the site says 0.981 to 0.994 at n = 25, with the source link.
+3. *"fit_to_role"* with a job description returns which requirement lines have public evidence (quoted, with links) and which have none, stated as counts.
+
+**The portfolio is the source.** The tools read zoebnomi.com live (llms.txt and the case-study pages), cached for 15 minutes. A new build, essay or note on the site shows up in `verify_claim`, `fit_to_role` and the resources with no release. If the site doesn't answer, each page falls back to a snapshot bundled at build time. On top of the live text sits a small set of curated claims with n and date. Each one is kept only while its exact quote is still on the site, and `/health` lists any that have dropped out.
 
 | Tool | What it does |
 |---|---|
 | `check_citations(answer, sources)` | For each inline citation (`[doc_id:chunk_id]` or `[id]`), decides what word overlap can decide and hands the rest back. It uses CrossSource's claim-span pairing and failure taxonomy (`supported`, `right_doc_wrong_passage`, `wrong_document`, `unsupported_claim`). A cite to an id that isn't in `sources`, or one where another passage clearly covers the claim, gets a deterministic verdict with the reason. Everything else returns `needs_judgment` with CrossSource's judge prompt, for your model to apply. With `use_client_model: true` your client's model judges them through MCP sampling (stdio clients that support it). |
 | `verify_claim(claim)` | Checks a claim or number about Zoeb Nomi against what zoebnomi.com says right now. Returns `found`, `number_mismatch` or `not_found`, with the site's quote, source URL, evidence link, and n and date where the site gives them. |
 | `fit_to_role(job_description)` | Maps a JD to his public work with quoted evidence picked from the live site, and lists requirements with no public evidence as gaps. It never answers compensation, availability, location or work authorization. |
+
+The lead tool packages the citation check from [CrossSource](https://github.com/zoeb-nomi/crosssource), his open eval harness for citation accuracy in legal RAG, so any agent can call it.
 
 Resources, all generated from the live site: `zoebnomi://llms.txt`, `zoebnomi://case-studies` (every case study with its key facts), `zoebnomi://writing` (every essay and note with its finding), and `zoebnomi://harness`, a live, read-only summary from the public agent ledger behind the harness panel on zoebnomi.com.
 
@@ -111,7 +124,7 @@ npm run worker:dry-run && node scripts/smoke.ts bundle .wrangler-dry/worker.js
 
 - `npm test`: 39 tests. They cover the tools and the MCP client end to end, over the in-memory/stdio path and over Streamable HTTP through the Worker handler, plus MCP sampling. Live behaviour is tested against a fake site: a new note is found and listed, a changed number drops the curated claim, a dead site falls back to the snapshot, and contact lines are redacted. House rules are tests too: every quote must be on the site, and there must be no dashes, banned overstatements or personal details.
 - `npm run worker:dry-run` bundles the Worker without contacting Cloudflare. The smoke script then lists and calls every tool and reads every resource against that bundle.
-- Publishing, rollback and what to watch: [PUBLISH.md](PUBLISH.md) (browser only: GitHub web UI and Cloudflare Workers Builds).
+- Deploys: Cloudflare Workers Builds deploys `main` to `mcp.zoebnomi.com` after `npm ci && npm test` pass; a failing test stops the deploy. Rollback is the previous version in the Worker's Deployments.
 - `node scripts/smoke.ts https://mcp.zoebnomi.com` is the post-deploy check. `GET https://mcp.zoebnomi.com/health` is the heartbeat.
 - `npx @modelcontextprotocol/inspector --cli node dist/stdio.js --method tools/list` runs the official Inspector against the stdio build.
 - `npm run snapshot` refreshes the fallback snapshot. If a curated quote has left the site, `npm test` then fails; live, `/health` shows it under `curated_dropped`.

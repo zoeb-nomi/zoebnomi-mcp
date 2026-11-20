@@ -2,28 +2,12 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.zoeb-nomi/zoebnomi",
   "title": "Zoeb Nomi",
-  "description": "CrossSource citation checker, claim verifier and JD-to-evidence map. Read-only, free.",
+  "description": "Checks RAG citations against their sources (CrossSource method), plus claim checks. Read-only, free.",
   "repository": {
     "url": "https://github.com/zoeb-nomi/zoebnomi-mcp",
     "source": "github"
   },
   "version": "0.1.0",
-  "packages": [
-    {
-      "registryType": "npm",
-      "identifier": "zoebnomi",
-      "version": "0.1.0",
-      "transport": {
-        "type": "stdio"
-      },
-      "packageArguments": [
-        {
-          "type": "positional",
-          "value": "mcp"
-        }
-      ]
-    }
-  ],
   "remotes": [
     {
       "type": "streamable-http",
