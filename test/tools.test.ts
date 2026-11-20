@@ -55,7 +55,9 @@ test('fit_to_role: maps requirements to quoted evidence and lists gaps honestly'
   assert.ok(caps.some((c) => /Regulated/.test(c)));
   assert.ok(r.gaps.some((g) => /Japanese/.test(g.jd_line)));
   for (const m of r.matches) for (const e of m.evidence) assert.ok(e.quote.length > 10 && /^https:\/\//.test(e.evidence));
-  assert.ok(r.summary.coverage > 0 && r.summary.coverage < 1);
+  assert.ok(r.summary.with_evidence > 0 && r.summary.gaps > 0);
+  assert.match(r.summary.headline, /^\d+ of \d+ requirement lines have public evidence/);
+  assert.ok(!/%/.test(r.summary.headline));
 });
 
 test('fit_to_role: never echoes compensation, visa or location lines', () => {
