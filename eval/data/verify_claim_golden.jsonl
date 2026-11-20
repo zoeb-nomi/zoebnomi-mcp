@@ -1,0 +1,28 @@
+{"id":"vc-01","query":"CrossSource strict prompting raised citation precision from 0.981 to 0.994","expect":"found","ids":["cs-v01-precision"]}
+{"id":"vc-02","query":"He cut a tax workflow's run time from 10-15 minutes to under a minute","expect":"found","ids":["instead-runtime","instead-latency"]}
+{"id":"vc-03","query":"Keka background verification: 28 US enterprise clients and $2.7M MRR","expect":"found","ids":["keka-bgv"]}
+{"id":"vc-04","query":"15/15 human-judge agreement on CrossSource v0.1","expect":"found","ids":["cs-v01-judge"]}
+{"id":"vc-05","query":"Cohen's kappa 0.98 on citation_check","expect":"found","ids":["cs-v03-kappa"]}
+{"id":"vc-06","query":"screener-eval made 885 calls","expect":"found","ids":["screener-design"]}
+{"id":"vc-07","query":"Perplexity went from 13 to 63 of 63 search probes citing zoebnomi.com","expect":"found","ids":["mirror-perplexity"]}
+{"id":"vc-08","query":"Claude cited his site on 0 of 63 probes","expect":"found","ids":["mirror-perplexity"]}
+{"id":"vc-09","query":"The eyecite PR showed 0 gains and 0 losses on 15,988 citations","expect":"found","ids":["eyecite"]}
+{"id":"vc-10","query":"5 models on 1,414 expert-labelled yes/no items","expect":"found","ids":["cheap-tier"]}
+{"id":"vc-11","query":"onboarding went from 30+ clicks to 8 and retention from 27% to 53%","expect":"found","ids":["instead-onboarding"]}
+{"id":"vc-12","query":"about 95% citation accuracy on the production golden set","expect":"found","ids":["instead-citation-accuracy"]}
+{"id":"vc-13","query":"the gap between two screeners was 22.3 points","expect":"found","ids":["screener-gap"]}
+{"id":"vc-14","query":"at 0.9 confidence 47 of 377 answers were wrong","expect":"found","ids":["note-0-9-threshold"]}
+{"id":"vc-15","query":"the TaxCalcBench audit found 2 answer-key errors","expect":"found","ids":["taxcalcbench"]}
+{"id":"vc-16","query":"strict prompting gave citation precision of 0.999","expect":"number_mismatch","ids":["cs-v01-precision"]}
+{"id":"vc-17","query":"Keka background verification reached 30 US enterprise clients","expect":"number_mismatch","ids":["keka-bgv"]}
+{"id":"vc-18","query":"screener-eval made 900 calls","expect":"number_mismatch","ids":["screener-design"]}
+{"id":"vc-19","query":"Instead was the first new entrant in 20 years to clear IRS e-filing approval","expect":"number_mismatch","ids":["instead-irs"]}
+{"id":"vc-20","query":"blind human-judge agreement was 14/15","expect":"number_mismatch","ids":["cs-v01-judge"]}
+{"id":"vc-21","query":"CrossSource v0.3 has 200 items over 45 opinions","expect":"number_mismatch","ids":["cs-v03-dataset"]}
+{"id":"vc-22","query":"He built 100+ integrations at Multiplier","expect":"not_verified","ids":[]}
+{"id":"vc-23","query":"His agent harness has logged 1,200+ agent runs","expect":"not_verified","ids":[]}
+{"id":"vc-24","query":"He led a team of 40 engineers at Instead","expect":"not_verified","ids":[]}
+{"id":"vc-25","query":"CrossSource was accepted at NeurIPS","expect":"not_verified","ids":[]}
+{"id":"vc-26","query":"He holds a PhD in computer science","expect":"not_verified","ids":[]}
+{"id":"vc-27","query":"TradeFrame is a fully autonomous trading agent","expect":"not_verified","ids":[]}
+{"id":"vc-28","query":"The eyecite pull request was merged","expect":"not_verified","ids":[]}
