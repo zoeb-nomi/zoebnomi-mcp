@@ -1,0 +1,19 @@
+# Cloudflare Worker for the remote MCP endpoint, https://mcp.zoebnomi.com/mcp.
+# Deployed by Cloudflare Workers Builds from GitHub main (see PUBLISH.md); never from a terminal.
+# The zoebnomi.com zone must be in the same Cloudflare account; the custom
+# domain creates the mcp.zoebnomi.com DNS record and certificate on deploy.
+# No secrets needed.
+name = "zoebnomi-mcp"
+main = "src/worker.ts"
+compatibility_date = "2026-11-01"
+workers_dev = false
+routes = [{ pattern = "mcp.zoebnomi.com", custom_domain = true }]
+
+[vars]
+# OpenAI app directory domain check: set to the token from the OpenAI portal
+# before submitting; served at /.well-known/openai-apps-challenge. Empty = 404.
+# Set it here, not in the dashboard: every Workers Builds deploy applies this file.
+OPENAI_APPS_CHALLENGE = ""
+
+[observability]
+enabled = true

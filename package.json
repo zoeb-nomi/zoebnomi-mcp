@@ -1,0 +1,54 @@
+{
+  "name": "zoebnomi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.165.0"
+  },
+  "description": "Zoeb Nomi as tools: a CrossSource citation checker, a claim verifier for zoebnomi.com, and a JD-to-evidence map. MCP server + CLI.",
+  "license": "MIT",
+  "author": "Zoeb Nomi (https://www.zoebnomi.com)",
+  "homepage": "https://www.zoebnomi.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoeb-nomi/zoebnomi-mcp.git"
+  },
+  "mcpName": "io.github.zoeb-nomi/zoebnomi",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "evals",
+    "citations",
+    "rag",
+    "llm-evaluation"
+  ],
+  "bin": {
+    "zoebnomi": "dist/cli.js"
+  },
+  "main": "dist/server.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli.js dist/stdio.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/*.test.ts",
+    "eval": "node eval/run-eval.ts",
+    "worker:dry-run": "wrangler deploy --dry-run --outdir .wrangler-dry",
+    "worker:dev": "wrangler dev",
+    "smoke": "node scripts/smoke.ts",
+    "snapshot": "NODE_USE_ENV_PROXY=1 node scripts/snapshot-site.ts"
+  }
+}
